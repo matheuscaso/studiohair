@@ -9,24 +9,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+
 
 @Entity
-public class Perfil implements Serializable{
+public class Menu implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
-	private String descricao;
-	@ManyToMany
-	@JoinColumn(name = "menu_perfil_id")
-	private Menu menu_perfil;
-	
+	private String titulo;
+	private String link;
+	private String icone;
+
 	public void inserir() {
 
 	}
@@ -38,27 +35,25 @@ public class Perfil implements Serializable{
 	public void excluir() {
 
 	}
-	
-	@OneToMany(mappedBy = "perfilfuncionarios")
-	
-	public List<Perfil> perfis = new ArrayList<>();
+	@ManyToMany(mappedBy = "menu_perfil")
+	public List<Menu> menu = new ArrayList<>();
 
-	public void carregarPorId(Integer id, String nome) {
+	public void carregarPorId(Integer id, String titulo) {
 		this.id = id;
-		this.nome = nome;
-		
-		
+		this.titulo = titulo;
 	}
 
-	public Perfil() {
+	public Menu() {
 		super();
 	}
 
-	public Perfil(Integer id, String nome, String descricao) {
+	public Menu(Integer id, String titulo, String link, String icone) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.descricao = descricao;
+		this.titulo = titulo;
+		this.link = link;
+		this.icone = icone;
+		
 	}
 
 	public Integer getId() {
@@ -69,28 +64,36 @@ public class Perfil implements Serializable{
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getLink() {
+		return link;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setLink(String link) {
+		this.link = link;
 	}
 
-	public List<Perfil> getPerfis() {
-		return perfis;
+	public String getIcone() {
+		return icone;
 	}
 
-	public void setPerfis(List<Perfil> perfis) {
-		this.perfis = perfis;
+	public void setIcone(String icone) {
+		this.icone = icone;
+	}
+	
+	public List<Menu> getMenu() {
+		return menu;
+	}
+
+	public void setMenu(List<Menu> menu) {
+		this.menu = menu;
 	}
 
 	@Override
@@ -106,9 +109,8 @@ public class Perfil implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Perfil other = (Perfil) obj;
+		Menu other = (Menu) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
+
 }

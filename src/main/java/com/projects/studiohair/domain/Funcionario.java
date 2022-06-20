@@ -1,17 +1,43 @@
 package com.projects.studiohair.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Funcionario {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
+@Entity
+public class Funcionario implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String cpf;
 	private String nome;
 	private String senha;
 	private String rgfuncionario;
 	private String endereco;
 	private String celularfuncionario;
+	@ManyToOne
+	@JoinColumn(name = "perfilfuncionario_id")
+	private Perfil perfilfuncionario;
+	@ManyToMany
+	@JoinColumn(name = "servico_funcionario_id")
+	private Servico servico_funcionario;
+	@ManyToOne
+	@JoinColumn(name = "agendamento_funcionario_id")
+	private Agendamento agendamento_funcionario;
+	@ManyToOne
+	@JoinColumn(name = "salao_funcionario_id")
+	private Salao salao_funcionarios;
 	
 	public void inserir() {
 
@@ -34,11 +60,10 @@ public class Funcionario {
 
 	public Funcionario() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Funcionario(String cpf, String nome, String senha, String rgfuncionario, String endereco,
-			String celularfuncionario, List<Funcionario> funcionarios) {
+			String celularfuncionario, Perfil perfilfuncionario, List<Funcionario> funcionarios) {
 		super();
 		this.cpf = cpf;
 		this.nome = nome;
@@ -46,6 +71,7 @@ public class Funcionario {
 		this.rgfuncionario = rgfuncionario;
 		this.endereco = endereco;
 		this.celularfuncionario = celularfuncionario;
+		this.perfilfuncionario = perfilfuncionario;
 		this.funcionarios = funcionarios;
 	}
 
@@ -95,6 +121,14 @@ public class Funcionario {
 
 	public void setCelularfuncionario(String celularfuncionario) {
 		this.celularfuncionario = celularfuncionario;
+	}
+	
+	public Perfil getPerfilfuncionario() {
+		return perfilfuncionario;
+	}
+	
+	public void setPerfilfuncionario(Perfil perfilfuncionario) {
+		this.perfilfuncionario = perfilfuncionario;
 	}
 
 	public List<Funcionario> getFuncionarios() {

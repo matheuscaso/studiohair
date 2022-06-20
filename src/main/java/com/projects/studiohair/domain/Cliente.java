@@ -1,11 +1,24 @@
 package com.projects.studiohair.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Cliente {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@Entity
+public class Cliente implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String cpf;
 	private String nome;
 	private String senha;
@@ -14,6 +27,9 @@ public class Cliente {
 	private String telefonecliente;
 	private String email;
 	private String celularcliente;
+	@ManyToOne
+	@JoinColumn(name = "salao_cliente_id")
+	private Salao salao_cliente;
 
 	public void inserir() {
 
